@@ -1,8 +1,6 @@
 # Kristina Leng
 
 # start modules
-import glob
-
 import pgzrun
 import sys
 
@@ -10,6 +8,8 @@ import sys
 WIDTH = 800
 HEIGHT = 600
 score = 0
+gameOver = False
+
 # print welcome
 print('Welcome!\nThe game is about to start!\nClick the mouse to "flap" upwards\nDodge the pipes and the floor\nGood luck and have fun!')
 # make background
@@ -44,8 +44,16 @@ PipesList = [
 
 # draw everything to screen
 def draw(): 
+
+    # Creating gameOver Screen
+    if gameOver == True:
+        screen.fill((0, 0, 0))
+        screen.draw.text("Game Over!" ,  center = (400,300), fontsize = 60)
+
+
     # draw background
     background.draw()
+
     # draw characters
     bird.draw()
     # draw actors
@@ -53,10 +61,12 @@ def draw():
         pipes.top.draw()
         pipes.bottom.draw()
 
+
 # update everything
 def update():
-    global score
-    global gameOver
+    global score, gameOver
+    if gameOver == True:
+        return
     # update bird
     bird.y = bird.y + 1
 
@@ -82,6 +92,10 @@ def update():
             print("Hit!\nGame Over!")
             print(f"score: {score}")
             sys.exit()
+
+        # creating gameOver
+    if bird.colliderect (pipes.top) or bird.colliderect (pipes.bottom) or bird.bottom > 600 or bird.top < 0:
+        gameOver = True
 
         # update score
     if pipes.top.x >= -44:
