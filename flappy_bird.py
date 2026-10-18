@@ -49,17 +49,18 @@ def draw():
     if gameOver == True:
         screen.fill((0, 0, 0))
         screen.draw.text("Game Over!" ,  center = (400,300), fontsize = 60)
-
+        screen.draw.text("Final Score: " +str(score), center = (400, 360), fontsize = 55)
+    else:
 
     # draw background
-    background.draw()
+        background.draw()
 
     # draw characters
-    bird.draw()
+        bird.draw()
     # draw actors
-    for pipes in PipesList:
-        pipes.top.draw()
-        pipes.bottom.draw()
+        for pipes in PipesList:
+            pipes.top.draw()
+            pipes.bottom.draw()
 
 
 # update everything
@@ -67,6 +68,7 @@ def update():
     global score, gameOver
     if gameOver == True:
         return
+    
     # update bird
     bird.y = bird.y + 1
 
@@ -81,17 +83,14 @@ def update():
     # bird hits bottom of screen
         if bird.y > 600:
             print("Game Over!")
-            print(f"score: {score}")
-            sys.exit()
+            gameOver = True
     # bird hits pipes
         if bird.colliderect (pipes.top):
             print("Hit!\nGame Over!")
-            print(f"score: {score}")
-            sys.exit()
+            gameOver = True
         if bird.colliderect (pipes.bottom):
             print("Hit!\nGame Over!")
-            print(f"score: {score}")
-            sys.exit()
+            gameOver = True
 
         # creating gameOver
     if bird.colliderect (pipes.top) or bird.colliderect (pipes.bottom) or bird.bottom > 600 or bird.top < 0:
