@@ -3,7 +3,7 @@
 # start modules
 import pgzrun
 import sys
-
+from random import Random
 # create constants
 WIDTH = 800
 HEIGHT = 600
@@ -48,8 +48,8 @@ def draw():
     # Creating gameOver Screen
     if gameOver == True:
         screen.fill((0, 0, 0))
-        screen.draw.text("Game Over!" ,  center = (400,300), fontsize = 60)
-        screen.draw.text("Final Score: " +str(score), center = (400, 360), fontsize = 55)
+        screen.draw.text("Game Over!" ,  center = (400,300), fontsize = 75)
+        screen.draw.text("Final Score: " +str(score), center = (400, 370), fontsize = 55)
     else:
 
     # draw background
