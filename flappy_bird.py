@@ -117,7 +117,7 @@ def draw():
         # draw actors
         for pipe in pipeslist:
             drawPipes(pipe)
-        screen.draw.text("Score: " + str(score), topleft=(20, 20), fontsize=30)
+        screen.draw.text("Score: " + str(score), topleft=(20, 20), color = (0, 0, 0), fontsize=30)
 
 # update everything
 def update():
