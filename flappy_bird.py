@@ -1,108 +1,147 @@
-# Kristina Leng
-
 # start modules
 import pgzrun
 import sys
-from random import Random
+from random import*
+
 # create constants
 WIDTH = 800
 HEIGHT = 600
 score = 0
-gameOver = False
+gameOver = False 
 
 # print welcome
 print('Welcome!\nThe game is about to start!\nClick the mouse to "flap" upwards\nDodge the pipes and the floor\nGood luck and have fun!')
+
 # make background
 background = Actor("bg")
 background.x = 400
 background.y = 300
+
 # make bird
 bird = Actor("bird")
 bird.x = 160
 bird.y = 300
+
 # make pipes
-class pipes():
+class pipe:
     def __init__(self, x, center_y, gap):
-        self.center_y = center_y
         self.x = x
+        self.center_y = center_y
         self.gap = gap
 
         self.top = Actor("top")
         self.bottom = Actor("bottom")
 
         self.top.x = x
-        self.top.y = center_y - (300 + 110)
-
+        self.top.y = center_y - (300 + gap / 2)
         self.bottom.x = x
-        self.bottom.y = center_y + 300 + 110
+        self.bottom.y = center_y + 300 + gap / 2
+pipeslist = [
+        pipe(466, 400, 220),
+        pipe(732, 180, 220),
+        pipe(998, 415, 220)
+        ]
 
-PipesList = [
-    pipes(266, 400, 220),
-    pipes(532, 180, 220),
-    pipes(798, 415, 220)
-] 
+def updatePipes(self):
+    self.top.x -= 1
+    self.bottom.x -= 1
+    if self.top.x < -44:
+        self.top.x = 844
+        self.bottom.x = 844
+        self.gap = randint(160, 260)
+        minimum = -250 + (300 // 2) + (self.gap // 2)
+        maximum = 850 - ((300 // 2) + (self.gap // 2))
+        self.center_y = randint(minimum, maximum)
+        self.top.y = self.center_y - (300 + self.gap / 2)
+        self.bottom.y = self.center_y + 300 + self.gap / 2
+    for pipe in pipeslist:
+            for part in [pipe.top, pipe.bottom]:
+                if part.colliderect(bird):
+                    gameOver = True
+        
+def drawPipes(self):
+    self.top.draw()
+    self.bottom.draw()
 
 # draw everything to screen
-def draw(): 
-
-    # Creating gameOver Screen
+def draw():
     if gameOver == True:
         screen.fill((0, 0, 0))
-        screen.draw.text("Game Over!" ,  center = (400,300), fontsize = 75)
-        screen.draw.text("Final Score: " +str(score), center = (400, 370), fontsize = 55)
+        screen.draw.text("Game Over!", center=(400, 300), fontsize=60)
+        screen.draw.text("Final Score: " + str(score), center=(400, 370), fontsize=40)
     else:
 
-    # draw background
+        # draw background
         background.draw()
 
-    # draw characters
+        # draw characters
         bird.draw()
-    # draw actors
-        for pipes in PipesList:
-            pipes.top.draw()
-            pipes.bottom.draw()
 
+        # draw actors
+        for pipe in pipeslist:
+            drawPipes(pipe)
+        screen.draw.text("Score: " + str(score), topleft = (20, 20), color = "black", fontsize = 30)
+
+def updatePipes(self):
+    self.top.x -= 1
+    self.bottom.x -= 1
+    if self.top.x < -44:
+        self.top.x = 844
+        self.bottom.x = 844
+        self.gap = randint(160, 260)
+        minimum = -250 + (300 // 2) + (self.gap // 2)
+        maximum = 850 - ((300 // 2) + (self.gap // 2))
+        self.center_y = randint(minimum, maximum)
+        self.top.y = self.center_y - (300 + self.gap / 2)
+        self.bottom.y = self.center_y + 300 + self.gap / 2
+    for pipe in pipeslist:
+            for part in [pipe.top, pipe.bottom]:
+                if part.colliderect(bird):
+                    gameOver = True
+        
+def drawPipes(self):
+    self.top.draw()
+    self.bottom.draw()
+
+# draw everything to screen
+def draw():
+    if gameOver == True:
+        screen.fill((0, 0, 0))
+        screen.draw.text("Game Over!", center=(400, 300), fontsize=60)
+        screen.draw.text("Final Score: " + str(score), center=(400, 360), fontsize=40)
+    else:
+        # draw background
+        background.draw()
+        # draw characters
+        bird.draw()
+        # draw actors
+        for pipe in pipeslist:
+            drawPipes(pipe)
+        screen.draw.text("Score: " + str(score), topleft=(20, 20), fontsize=30)
 
 # update everything
 def update():
     global score, gameOver
     if gameOver == True:
         return
-    
     # update bird
-    bird.y = bird.y + 1
-
+    bird.y = bird.y + 1.5
     # update pipes
-    for pipes in PipesList:
-        pipes.top.x -= 1
-        pipes.bottom.x -= 1
-        if pipes.top.x < -44:
-            pipes.top.x = 844
-            pipes.bottom.x = 844
-
+    for pipe in pipeslist:
+        updatePipes(pipe)
+        if pipe.top.x == 160:
+            score += 1
+        if bird.colliderect(pipe.top) or bird.colliderect(pipe.bottom):
+            gameOver = True
     # bird hits bottom of screen
-        if bird.y > 600:
-            print("Game Over!")
-            gameOver = True
-    # bird hits pipes
-        if bird.colliderect (pipes.top):
-            print("Hit!\nGame Over!")
-            gameOver = True
-        if bird.colliderect (pipes.bottom):
-            print("Hit!\nGame Over!")
-            gameOver = True
-
-        # creating gameOver
-    if bird.colliderect (pipes.top) or bird.colliderect (pipes.bottom) or bird.bottom > 600 or bird.top < 0:
+    if bird.y > 600 or bird.top < 0:
         gameOver = True
-
-        # update score
-    if pipes.top.x >= -44:
-        score = score + 1
-
+    # bird hits pipes
+    
 
 # moving
 def on_mouse_down():
     bird.y -= 50
+
 # runs everything
 pgzrun.go()
