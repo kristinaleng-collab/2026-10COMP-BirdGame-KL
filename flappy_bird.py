@@ -108,7 +108,7 @@ def draw():
     if gameOver == True:
         screen.fill((0, 0, 0))
         screen.draw.text("Game Over!", center=(400, 300), fontsize=60)
-        screen.draw.text("Final Score: " + str(score), center=(400, 360), fontsize=40)
+        screen.draw.text("Final Score: " + str(score), center=(400, 360), shadow = (0.7,1.2), scolor = "white", fontsize=40)
     else:
         # draw background
         background.draw()
