@@ -8,6 +8,8 @@ WIDTH = 800
 HEIGHT = 600
 score = 0
 gameOver = False 
+tick = 0
+beep = tone.create('A3', 0.5)
 
 # print welcome
 print('Welcome!\nThe game is about to start!\nClick the mouse to "flap" upwards\nDodge the pipes and the floor\nGood luck and have fun!')
@@ -121,11 +123,20 @@ def draw():
 
 # update everything
 def update():
-    global score, gameOver
+    global score, gameOver, tick
     if gameOver == True:
         return
+
+    # animate thingy
+    tick += 1
+    if tick == 31:
+        tick = 0
     # update bird
     bird.y = bird.y + 2
+    if tick == 15:
+        bird.image = "bird_wingsdown"
+    elif tick == 30:
+        bird.image = "bird_wingsup"
     # update pipes
     for pipe in pipeslist:
         updatePipes(pipe)
@@ -138,10 +149,12 @@ def update():
         gameOver = True
     # bird hits pipes
     
-
 # moving
 def on_mouse_down():
     bird.y -= 60
+    beep.play()
+
+
 
 # runs everything
 pgzrun.go()
