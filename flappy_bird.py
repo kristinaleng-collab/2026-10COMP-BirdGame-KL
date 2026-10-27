@@ -83,8 +83,8 @@ def draw():
         screen.draw.text("Score: " + str(score), topleft = (20, 20), color = "black", fontsize = 30)
 
 def updatePipes(self):
-    self.top.x -= 1
-    self.bottom.x -= 1
+    self.top.x -= 2
+    self.bottom.x -= 2
     if self.top.x < -44:
         self.top.x = 844
         self.bottom.x = 844
@@ -141,7 +141,7 @@ def update():
 
 # moving
 def on_mouse_down():
-    bird.y -= 50
+    bird.y -= 70
 
 # runs everything
 pgzrun.go()
