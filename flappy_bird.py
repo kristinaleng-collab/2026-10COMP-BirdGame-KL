@@ -44,27 +44,6 @@ pipeslist = [
         pipe(998, 415, 220)
         ]
 
-def updatePipes(self):
-    self.top.x -= 1
-    self.bottom.x -= 1
-    if self.top.x < -44:
-        self.top.x = 844
-        self.bottom.x = 844
-        self.gap = randint(160, 260)
-        minimum = -250 + (300 // 2) + (self.gap // 2)
-        maximum = 850 - ((300 // 2) + (self.gap // 2))
-        self.center_y = randint(minimum, maximum)
-        self.top.y = self.center_y - (300 + self.gap / 2)
-        self.bottom.y = self.center_y + 300 + self.gap / 2
-    for pipe in pipeslist:
-            for part in [pipe.top, pipe.bottom]:
-                if part.colliderect(bird):
-                    gameOver = True
-        
-def drawPipes(self):
-    self.top.draw()
-    self.bottom.draw()
-
 # draw everything to screen
 def draw():
     if gameOver == True:
@@ -91,8 +70,8 @@ def updatePipes(self):
         self.top.x = 844
         self.bottom.x = 844
         self.gap = randint(160, 260)
-        minimum = -250 + (300 // 2) + (self.gap // 2)
-        maximum = 850 - ((300 // 2) + (self.gap // 2))
+        minimum = -250 + (320 // 2) + (self.gap // 2)
+        maximum = 850 - ((320 // 2) + (self.gap // 2))
         self.center_y = randint(minimum, maximum)
         self.top.y = self.center_y - (300 + self.gap / 2)
         self.bottom.y = self.center_y + 300 + self.gap / 2
@@ -153,8 +132,6 @@ def update():
 def on_mouse_down():
     bird.y -= 60
     beep.play()
-
-
 
 # runs everything
 pgzrun.go()
