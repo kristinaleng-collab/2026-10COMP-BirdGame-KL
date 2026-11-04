@@ -1,7 +1,11 @@
 # start modules
 import pgzrun
+import pygame
 import sys
 from random import*
+
+font1 = pygame.font.Font("Fonts/04B_30__.TTF", 40)
+
 
 # create constants
 WIDTH = 800
@@ -10,7 +14,8 @@ score = 0
 gameOver = False 
 tick = 0
 beep = tone.create('A3', 0.5)
-
+outText = False
+start = False
 # print welcome
 print('Welcome!\nThe game is about to start!\nClick the mouse to "flap" upwards\nDodge the pipes and the floor\nGood luck and have fun!')
 
@@ -35,9 +40,9 @@ class pipe:
         self.bottom = Actor("bottom")
 
         self.top.x = x
-        self.top.y = center_y - (300 + gap / 2)
+        self.top.y = center_y - (320 + gap / 2)
         self.bottom.x = x
-        self.bottom.y = center_y + 300 + gap / 2
+        self.bottom.y = center_y + 320 + gap / 2
 pipeslist = [
         pipe(466, 400, 220),
         pipe(732, 180, 220),
@@ -46,22 +51,34 @@ pipeslist = [
 
 # draw everything to screen
 def draw():
-    if gameOver == True:
-        screen.fill((0, 0, 0))
-        screen.draw.text("Game Over!", center=(400, 300), fontsize=60)
-        screen.draw.text("Final Score: " + str(score), center=(400, 370), fontsize=40)
+    if start == False:
+        background.draw()
+        screen.draw.text("Click the game to start!", center = (400, 300), color = 'black', fontsize = 60)
+        startingfont = font1.render("Click the game to start!",True, 'black')
+        screen.blit(startingfont, (300, 300))
+
+
     else:
+        if gameOver == True:
+            screen.fill((0, 0, 0))
+            screen.draw.text("Game Over!", center=(400, 270), fontsize=60)
+            screen.draw.text("Final Score: " + str(score), center=(400, 320), fontsize=40)
+            screen.draw.text("High Score: ", center=(400, 370), fontsize=50)
+
+        else:
 
         # draw background
-        background.draw()
-
+            background.draw()
         # draw characters
-        bird.draw()
+            bird.draw()
 
         # draw actors
-        for pipe in pipeslist:
-            drawPipes(pipe)
-        screen.draw.text("Score: " + str(score), topleft = (20, 20), color = "black", fontsize = 30)
+            for pipe in pipeslist:
+                drawPipes(pipe)
+
+        scorefont = font1.render(f"{score}", True, 'black')
+        screen.blit(scorefont, (400, 20))
+
 
 def updatePipes(self):
     self.top.x -= 1.5
@@ -70,8 +87,8 @@ def updatePipes(self):
         self.top.x = 844
         self.bottom.x = 844
         self.gap = randint(160, 260)
-        minimum = -250 + (320 // 2) + (self.gap // 2)
-        maximum = 850 - ((320 // 2) + (self.gap // 2))
+        minimum = -200 + (320 // 2) + (self.gap // 2)
+        maximum = 800 - ((320 // 2) + (self.gap // 2))
         self.center_y = randint(minimum, maximum)
         self.top.y = self.center_y - (300 + self.gap / 2)
         self.bottom.y = self.center_y + 300 + self.gap / 2
@@ -84,27 +101,15 @@ def drawPipes(self):
     self.top.draw()
     self.bottom.draw()
 
-# draw everything to screen
-def draw():
-    if gameOver == True:
-        screen.fill((0, 0, 0))
-        screen.draw.text("Game Over!", center=(400, 300), fontsize=60)
-        screen.draw.text("Final Score: " + str(score), center=(400, 360), fontsize=40)
-    else:
-        # draw background
-        background.draw()
-        # draw characters
-        bird.draw()
-        # draw actors
-        for pipe in pipeslist:
-            drawPipes(pipe)
-        screen.draw.text("Score: " + str(score), topleft=(20, 20), color = (0, 0, 0), fontsize=30)
 
 # update everything
 def update():
-    global score, gameOver, tick
-    if gameOver == True:
-        return
+    global score, gameOver, tick, outText
+    if start == False:
+        pass
+    else:
+        if gameOver == True:
+            return
 
     # animate thingy
     tick += 1
@@ -130,8 +135,12 @@ def update():
     
 # moving
 def on_mouse_down():
-    bird.y -= 60
-    beep.play()
+    global start
+    if start == False:
+        start = True
+    else:
+        bird.y -= 50
+        beep.play()
 
 # runs everything
 pgzrun.go()
