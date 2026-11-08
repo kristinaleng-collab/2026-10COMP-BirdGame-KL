@@ -40,9 +40,9 @@ class pipe:
         self.bottom = Actor("bottom")
 
         self.top.x = x
-        self.top.y = center_y - (320 + gap / 2)
+        self.top.y = center_y - (310 + gap / 2)
         self.bottom.x = x
-        self.bottom.y = center_y + 320 + gap / 2
+        self.bottom.y = center_y + 310 + gap / 2
 pipeslist = [
         pipe(466, 400, 220),
         pipe(732, 180, 220),
@@ -53,9 +53,9 @@ pipeslist = [
 def draw():
     if start == False:
         background.draw()
-        screen.draw.text("Click the game to start!", center = (400, 300), color = 'black', fontsize = 60)
-        startingfont = font1.render("Click the game to start!",True, 'black')
-        screen.blit(startingfont, (300, 300))
+        screen.draw.text("", center = (400, 300), color = 'black', fontsize = 30)
+        startingfont = font1.render("Click the game to start!",True, 'black',)
+        screen.blit(startingfont, (20, 300))
 
 
     else:
@@ -90,8 +90,8 @@ def updatePipes(self):
         minimum = -200 + (320 // 2) + (self.gap // 2)
         maximum = 800 - ((320 // 2) + (self.gap // 2))
         self.center_y = randint(minimum, maximum)
-        self.top.y = self.center_y - (300 + self.gap / 2)
-        self.bottom.y = self.center_y + 300 + self.gap / 2
+        self.top.y = self.center_y - (310 + self.gap / 2)
+        self.bottom.y = self.center_y + 310 + self.gap / 2
     for pipe in pipeslist:
             for part in [pipe.top, pipe.bottom]:
                 if part.colliderect(bird):
