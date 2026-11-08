@@ -40,9 +40,9 @@ class pipe:
         self.bottom = Actor("bottom")
 
         self.top.x = x
-        self.top.y = center_y - (310 + gap / 2)
+        self.top.y = center_y - (320 + gap / 2)
         self.bottom.x = x
-        self.bottom.y = center_y + 310 + gap / 2
+        self.bottom.y = center_y + 320 + gap / 2
 pipeslist = [
         pipe(466, 400, 220),
         pipe(732, 180, 220),
@@ -53,8 +53,8 @@ pipeslist = [
 def draw():
     if start == False:
         background.draw()
-        screen.draw.text("", center = (400, 300), color = 'black', fontsize = 30)
-        startingfont = font1.render("Click the game to start!",True, 'black',)
+        screen.draw.text("", center = (400, 300), color = 'black', fontsize = 40)
+        startingfont = font1.render("Click the game to start!",True, 'black')
         screen.blit(startingfont, (20, 300))
 
 
@@ -63,7 +63,7 @@ def draw():
             screen.fill((0, 0, 0))
             screen.draw.text("Game Over!", center=(400, 270), fontsize=60)
             screen.draw.text("Final Score: " + str(score), center=(400, 320), fontsize=40)
-            screen.draw.text("High Score: ", center=(400, 370), fontsize=50)
+            screen.draw.text("High Score: WIP", center=(400, 370), fontsize=50)
 
         else:
 
@@ -90,8 +90,8 @@ def updatePipes(self):
         minimum = -200 + (320 // 2) + (self.gap // 2)
         maximum = 800 - ((320 // 2) + (self.gap // 2))
         self.center_y = randint(minimum, maximum)
-        self.top.y = self.center_y - (310 + self.gap / 2)
-        self.bottom.y = self.center_y + 310 + self.gap / 2
+        self.top.y = self.center_y - (300 + self.gap / 2)
+        self.bottom.y = self.center_y + 300 + self.gap / 2
     for pipe in pipeslist:
             for part in [pipe.top, pipe.bottom]:
                 if part.colliderect(bird):
@@ -112,25 +112,25 @@ def update():
             return
 
     # animate thingy
-    tick += 1
-    if tick == 31:
-        tick = 0
+        tick += 1
+        if tick == 31:
+            tick = 0
     # update bird
-    bird.y = bird.y + 2
-    if tick == 15:
-        bird.image = "bird_wingsdown"
-    elif tick == 30:
-        bird.image = "bird_wingsup"
+        bird.y = bird.y + 2
+        if tick == 15:
+            bird.image = "bird_wingsdown"
+        elif tick == 30:
+            bird.image = "bird_wingsup"
     # update pipes
-    for pipe in pipeslist:
-        updatePipes(pipe)
-        if pipe.top.x == 160:
-            score += 1
-        if bird.colliderect(pipe.top) or bird.colliderect(pipe.bottom):
-            gameOver = True
+        for pipe in pipeslist:
+            updatePipes(pipe)
+            if pipe.top.x == 160:
+                score += 1
+            if bird.colliderect(pipe.top) or bird.colliderect(pipe.bottom):
+                gameOver = True
     # bird hits bottom of screen
-    if bird.y > 600 or bird.top < 0:
-        gameOver = True
+        if bird.y > 600 or bird.top < 0:
+            gameOver = True
     # bird hits pipes
     
 # moving
