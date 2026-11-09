@@ -20,7 +20,7 @@ start = False
 print('Welcome!\nThe game is about to start!\nClick the mouse to "flap" upwards\nDodge the pipes and the floor\nGood luck and have fun!')
 
 # make background
-background = Actor("bg")
+background = Actor("space")
 background.x = 400
 background.y = 300
 
@@ -36,8 +36,8 @@ class pipe:
         self.center_y = center_y
         self.gap = gap
 
-        self.top = Actor("top")
-        self.bottom = Actor("bottom")
+        self.top = Actor("top1")
+        self.bottom = Actor("bottom1")
 
         self.top.x = x
         self.top.y = center_y - (320 + gap / 2)
@@ -53,8 +53,9 @@ pipeslist = [
 def draw():
     if start == False:
         background.draw()
+        bird.draw()
         screen.draw.text("", center = (400, 300), color = 'black', fontsize = 40)
-        startingfont = font1.render("Click the game to start!",True, 'black')
+        startingfont = font1.render("Click the game to start!",True, 'white')
         screen.blit(startingfont, (20, 300))
 
 
@@ -106,7 +107,16 @@ def drawPipes(self):
 def update():
     global score, gameOver, tick, outText
     if start == False:
-        pass
+        bird.x = 210
+        bird.y = 190
+        tick += 1
+        if tick == 31:
+            tick = 0
+        if tick == 15:
+            bird.image = "bird_wingsdown"  
+        elif tick == 30:
+            bird.image = "bird_wingsup"            
+            pass
     else:
         if gameOver == True:
             return
