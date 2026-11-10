@@ -20,7 +20,7 @@ start = False
 print('Welcome!\nThe game is about to start!\nClick the mouse to "flap" upwards\nDodge the pipes and the floor\nGood luck and have fun!')
 
 # make background
-background = Actor("space")
+background = Actor("bg3")
 background.x = 400
 background.y = 300
 
@@ -72,7 +72,6 @@ def draw():
             background.draw()
         # draw characters
             bird.draw()
-
         # draw actors
             for pipe in pipeslist:
                 drawPipes(pipe)
